@@ -1042,19 +1042,122 @@ function renderConnectedMode() {
   // ---------------------------------------------
   // MODE INVITÉ
   // ---------------------------------------------
-  function renderGuestMode() {
-    if (statsRow) statsRow.innerHTML = '';
-    mainContent.innerHTML = `
-      <div class="guest-hero">
-        <h1 class="guest-title">Mégane Cloud</h1>
-        <p class="guest-subtitle">Votre coffre-fort numérique</p>
-        <div class="guest-cta">
-          <a href="auth.html?mode=signup" class="btn btn-primary">Créer un compte</a>
-          <a href="auth.html?mode=login" class="btn btn-secondary">Se connecter</a>
+ // ---------------------------------------------
+// RENDU COMPLET - MODE INVITÉ
+// ---------------------------------------------
+function renderGuestMode() {
+  console.log('👤 Mode invité affiché');
+  
+  // Cacher les éléments du mode connecté
+  if (statsContainer) statsContainer.style.display = 'none';
+  if (recentFilesBar) recentFilesBar.style.display = 'none';
+  if (fabContainer) fabContainer.style.display = 'none';
+  if (searchContainer) searchContainer.style.display = 'none';
+  if (settingsBtn) settingsBtn.style.display = 'none';
+  
+  // Afficher les boutons d'auth
+  if (authButtons) authButtons.style.display = 'flex';
+  
+  if (!mainContent) return;
+
+  mainContent.innerHTML = `
+    <div class="guest-hero">
+      <h1 class="guest-title">Mégane Cloud</h1>
+      <p class="guest-subtitle">Votre coffre-fort numérique personnel</p>
+      
+      <div class="guest-description">
+        <p>
+          Stockez, gérez et retrouvez tous vos fichiers importants en toute sécurité, 
+          accessibles depuis n'importe quel appareil.
+        </p>
+      </div>
+
+      <div class="guest-features">
+        <div class="guest-feature">
+          <div class="feature-icon">🔒</div>
+          <h3>Sécurité totale</h3>
+          <p>Chiffrement de bout en bout de vos données</p>
+        </div>
+        <div class="guest-feature">
+          <div class="feature-icon">🌍</div>
+          <h3>Accessible partout</h3>
+          <p>Sur mobile, tablette et ordinateur</p>
+        </div>
+        <div class="guest-feature">
+          <div class="feature-icon">⚡</div>
+          <h3>Simple & rapide</h3>
+          <p>Interface intuitive et réactive</p>
+        </div>
+        <div class="guest-feature">
+          <div class="feature-icon">📁</div>
+          <h3>Organisation</h3>
+          <p>Classez vos fichiers dans des dossiers</p>
+        </div>
+        <div class="guest-feature">
+          <div class="feature-icon">🎵</div>
+          <h3>Multimédia</h3>
+          <p>Photos, vidéos, musique, documents</p>
+        </div>
+        <div class="guest-feature">
+          <div class="feature-icon">🛡️</div>
+          <h3>Confidentialité</h3>
+          <p>Vos fichiers vous appartiennent</p>
         </div>
       </div>
-    `;
-  }
+    </div>
+
+    <div class="guest-footer">
+      <div class="footer-links">
+        <a href="apropos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+        <a href="confidentialite.html">Confidentialité</a>
+      </div>
+      <div class="copyright">© 2025 Mégane Cloud - Tous droits réservés</div>
+    </div>
+  `;
+}
+
+// ---------------------------------------------
+// RENDU COMPLET - MODE CONNECTÉ
+// ---------------------------------------------
+function renderConnectedMode() {
+  console.log('🔐 Mode connecté affiché');
+  
+  // Afficher les éléments du mode connecté
+  if (statsContainer) statsContainer.style.display = 'block';
+  if (recentFilesBar) recentFilesBar.style.display = 'flex';
+  if (fabContainer) fabContainer.style.display = 'flex';
+  if (searchContainer) searchContainer.style.display = 'block';
+  if (settingsBtn) settingsBtn.style.display = 'flex';
+  
+  // Cacher les boutons d'auth
+  if (authButtons) authButtons.style.display = 'none';
+  
+  const stats = calculateStats();
+  const filteredFiles = getFilteredFiles();
+  const displayFiles = filteredFiles.length > 0 ? filteredFiles.slice(0, 20) : [];
+  
+  renderStats(stats);
+  
+  mainContent.innerHTML = `
+    <div class="files-grid" id="filesGrid">
+      ${renderFilesGrid(displayFiles)}
+    </div>
+  `;
+  
+  // Forcer l'application des favoris après rendu
+  setTimeout(() => {
+    document.querySelectorAll('.file-item').forEach(item => {
+      const fileId = item.dataset.id;
+      if (favorisList.includes(fileId)) {
+        item.classList.add('favori');
+      }
+    });
+  }, 50);
+  
+  setupFileClickListeners();
+  setupLongPressListeners();
+}
 
   // ---------------------------------------------
   // UTILITAIRES
