@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Mégane Cloud • Gestionnaire</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <style>
+    /* ===== RESET & VARIABLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-blue: #4a90e2;
+      --primary-pink: #ff7e9f;
+      --gradient-main: linear-gradient(135deg, #4a90e2, #ff7e9f);
+      --bg-soft: #eef0f5;
+      --neu-shadow-light: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff;
+      --neu-shadow-medium: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+      --neu-shadow-small: 3px 3px 6px #d1d9e6, -3px -3px 6px #ffffff;
+      --text-dark: #2c3e50;
+      --text-light: #6c7a8d;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-soft);
+      min-height: 100vh;
+      padding: 80px 20px 30px 20px;
+      color: var(--text-dark);
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      right: 1rem;
+      height: 70px;
+      background: white;
+      border-radius: 40px;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--neu-shadow-light);
+      border: double 2px transparent;
+      background-image: linear-gradient(white, white), 
+                        linear-gradient(135deg, #4a90e2, #ff7e9f);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      z-index: 100;
+    }
+
+    .logo-circle {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--gradient-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .site-name-3d {
+      font-size: 1.3rem;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      border-radius: 40px;
+      background: white;
+      box-shadow: var(--neu-shadow-small);
+      color: var(--text-dark);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .action-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: var(--neu-shadow-small);
+      border: none;
+      font-size: 1.3rem;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      color: var(--primary-pink);
+      box-shadow: var(--neu-shadow-medium);
+    }
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb {
+      background: white;
+      border-radius: 40px;
+      padding: 0.8rem 1.5rem;
+      margin: 1rem 0;
+      box-shadow: var(--neu-shadow-small);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: var(--text-light);
+      cursor: pointer;
+      padding: 0.3rem 0.8rem;
+      border-radius: 30px;
+      transition: all 0.2s;
+    }
+
+    .breadcrumb-item:hover {
+      background: var(--bg-soft);
+      color: var(--primary-blue);
+    }
+
+    .breadcrumb-item i {
+      font-size: 0.9rem;
+    }
+
+    .breadcrumb-item:last-child {
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    .breadcrumb-separator {
+      color: var(--text-light);
+      opacity: 0.5;
+    }
+
+    /* ===== CONTENU PRINCIPAL ===== */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Section dossiers */
+    .folders-section {
+      background: white;
+      border-radius: 30px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--neu-shadow-light);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .add-folder-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gradient-main);
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: var(--neu-shadow-small);
+      transition: all 0.2s;
+    }
+
+    .add-folder-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--neu-shadow-medium);
+    }
+
+    .folders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .folder-item {
+      background: var(--bg-soft);
+      border-radius: 20px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      border: 2px solid transparent;
+    }
+
+    .folder-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--neu-shadow-medium);
+    }
+
+    .folder-item.selected {
+      border-color: var(--primary-pink);
+      background: rgba(255,126,159,0.05);
+    }
+
+    .folder-icon {
+      font-size: 2.5rem;
+      color: var(--primary-blue);
+    }
+
+    .folder-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: center;
+      word-break: break-word;
+      width: 100%;
+    }
+
+    .folder-actions {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      display: flex;
+      gap: 0.3rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .folder-item:hover .folder-actions {
+      opacity: 1;
+    }
+
+    .folder-action-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: white;
+      border: none;
+      box-shadow: var(--neu-shadow-small);
+      color: var(--text-dark);
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .folder-action-btn:hover {
+      color: var(--primary-pink);
+    }
+
+    /* Section fichiers */
+    .files-section {
+      background: white;
+      border-radius: 30px;
+      padding: 1.5rem;
+      box-shadow: var(--neu-shadow-light);
+    }
+
+    .files-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .add-file-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gradient-main);
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: var(--neu-shadow-small);
+      transition: all 0.2s;
+    }
+
+    .files-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .file-item {
+      background: var(--bg-soft);
+      border-radius: 15px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+      position: relative;
+    }
+
+    .file-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--neu-shadow-medium);
+    }
+
+    .file-item.selected {
+      border-color: var(--primary-pink);
+      background: rgba(255,126,159,0.05);
+    }
+
+    .file-item.selected::after {
+      content: '✓';
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 24px;
+      height: 24px;
+      background: var(--primary-pink);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .file-icon {
+      font-size: 2.5rem;
+      filter: drop-shadow(0 2px 5px rgba(74,144,226,0.3));
+    }
+
+    .file-name {
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-align: center;
+      word-break: break-word;
+      width: 100%;
+    }
+
+    /* ===== OVERLAY DE SÉLECTION ===== */
+    .selection-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .selection-overlay:not(.hidden) {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .overlay-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+    }
+
+    .overlay-container {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      max-height: 80vh;
+      background: white;
+      border-radius: 30px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 2001;
+    }
+
+    .overlay-header {
+      padding: 1.5rem;
+      background: var(--gradient-main);
+      color: white;
+    }
+
+    .overlay-header h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .overlay-breadcrumb {
+      padding: 1rem 1.5rem;
+      background: var(--bg-soft);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .overlay-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+    }
+
+    .overlay-categories {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .category-chip {
+      padding: 0.5rem 1.2rem;
+      background: var(--bg-soft);
+      border-radius: 30px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+
+    .category-chip:hover,
+    .category-chip.active {
+      background: var(--gradient-main);
+      color: white;
+    }
+
+    .overlay-folders {
+      margin-bottom: 1.5rem;
+    }
+
+    .overlay-folders-title {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .overlay-folders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .overlay-folder-item {
+      background: var(--bg-soft);
+      border-radius: 15px;
+      padding: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .overlay-folder-item:hover {
+      background: rgba(74,144,226,0.1);
+    }
+
+    .overlay-folder-item i {
+      color: var(--primary-blue);
+    }
+
+    .overlay-files-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.8rem;
+    }
+
+    .overlay-file-item {
+      background: var(--bg-soft);
+      border-radius: 12px;
+      padding: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+
+    .overlay-file-item:hover {
+      transform: translateY(-2px);
+    }
+
+    .overlay-file-item.selected {
+      border-color: var(--primary-pink);
+      background: rgba(255,126,159,0.05);
+    }
+
+    .overlay-file-item i {
+      font-size: 2rem;
+    }
+
+    .overlay-footer {
+      padding: 1.5rem;
+      background: white;
+      border-top: 1px solid #eee;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .overlay-btn {
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .overlay-btn-primary {
+      background: var(--gradient-main);
+      color: white;
+      box-shadow: var(--neu-shadow-small);
+    }
+
+    .overlay-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--neu-shadow-medium);
+    }
+
+    .overlay-btn-secondary {
+      background: var(--bg-soft);
+      color: var(--text-dark);
+    }
+
+    .overlay-btn-secondary:hover {
+      background: #e0e4e9;
+    }
+
+    .selection-count {
+      margin-right: auto;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* ===== MODAL NOUVEAU DOSSIER ===== */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.hidden {
+      display: none;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+    }
+
+    .modal-container {
+      position: relative;
+      background: white;
+      border-radius: 30px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 400px;
+      z-index: 3001;
+    }
+
+    .modal-container h3 {
+      margin-bottom: 1.5rem;
+      color: var(--text-dark);
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--bg-soft);
+      border-radius: 40px;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-input:focus {
+      outline: none;
+      border-color: var(--primary-pink);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+
+    /* ===== BOUTONS FLOTTANTS ===== */
+    .fab-paste {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: var(--neu-shadow-strong);
+      border: double 2px transparent;
+      background-image: linear-gradient(white, white), 
+                        linear-gradient(135deg, #4a90e2, #ff7e9f);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: all 0.2s;
+      z-index: 100;
+    }
+
+    .fab-paste.active {
+      color: var(--primary-pink);
+      box-shadow: 0 0 20px rgba(255,126,159,0.5);
+    }
+
+    .fab-paste:hover {
+      transform: translateY(-4px) scale(1.05);
+    }
+
+    .fab-paste.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 800px) {
+      .files-grid,
+      .overlay-files-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .files-grid,
+      .overlay-files-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .folders-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .site-name-3d {
+        display: none;
+      }
+      
+      .fab-paste {
+        bottom: 1.5rem;
+        left: 1.5rem;
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <a href="index.html" class="logo-circle">MC</a>
+    <span class="site-name-3d">GESTIONNAIRE</span>
+    <div class="header-actions">
+      <button class="action-btn" id="searchBtn" title="Rechercher">
+        <i class="fas fa-search"></i>
+      </button>
+      <a href="para.html" class="action-btn" title="Paramètres">
+        <i class="fas fa-cog"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb" id="breadcrumb">
+    <span class="breadcrumb-item" data-path="root">
+      <i class="fas fa-home"></i> Mon Cloud
+    </span>
+  </div>
+
+  <!-- CONTENU PRINCIPAL -->
+  <main class="main-content">
+    <!-- Section dossiers -->
+    <section class="folders-section">
+      <div class="section-header">
+        <h2 class="section-title">Dossiers</h2>
+        <button class="add-folder-btn" id="addFolderBtn" title="Nouveau dossier">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <div class="folders-grid" id="foldersGrid">
+        <!-- Les dossiers seront injectés par JS -->
+        <div class="folder-item">
+          <i class="fas fa-folder folder-icon"></i>
+          <span class="folder-name">Documents</span>
+          <div class="folder-actions">
+            <button class="folder-action-btn" title="Ajouter des fichiers">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="folder-item">
+          <i class="fas fa-folder folder-icon"></i>
+          <span class="folder-name">Images</span>
+          <div class="folder-actions">
+            <button class="folder-action-btn" title="Ajouter des fichiers">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="folder-item">
+          <i class="fas fa-folder folder-icon"></i>
+          <span class="folder-name">Audio</span>
+          <div class="folder-actions">
+            <button class="folder-action-btn" title="Ajouter des fichiers">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section fichiers -->
+    <section class="files-section">
+      <div class="files-header">
+        <h2 class="section-title">Fichiers</h2>
+        <button class="add-file-btn" id="addFileBtn" title="Ajouter des fichiers">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <div class="files-grid" id="filesGrid">
+        <!-- Les fichiers seront injectés par JS -->
+        <div class="file-item">
+          <i class="fas fa-file-pdf file-icon" style="color: #e74c3c;"></i>
+          <span class="file-name">contrat.pdf</span>
+        </div>
+        <div class="file-item">
+          <i class="fas fa-file-image file-icon" style="color: #27ae60;"></i>
+          <span class="file-name">vacances.jpg</span>
+        </div>
+        <div class="file-item">
+          <i class="fas fa-file-audio file-icon" style="color: #f39c12;"></i>
+          <span class="file-name">musique.mp3</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- BOUTON COLLER (actif si fichier copié) -->
+  <div class="fab-paste disabled" id="pasteBtn" title="Coller">
+    <i class="fas fa-paste"></i>
+  </div>
+
+  <!-- OVERLAY DE SÉLECTION DE FICHIERS -->
+  <div class="selection-overlay hidden" id="selectionOverlay">
+    <div class="overlay-backdrop" id="overlayBackdrop"></div>
+    <div class="overlay-container">
+      <div class="overlay-header">
+        <h2>Choisir des fichiers</h2>
+      </div>
+      <div class="overlay-breadcrumb" id="overlayBreadcrumb">
+        <span class="breadcrumb-item" data-path="root">
+          <i class="fas fa-home"></i> Mes fichiers
+        </span>
+      </div>
+      <div class="overlay-content" id="overlayContent">
+        <!-- Catégories -->
+        <div class="overlay-categories">
+          <span class="category-chip active" data-category="all">Tous</span>
+          <span class="category-chip" data-category="audio">🎵 Audio</span>
+          <span class="category-chip" data-category="image">🖼️ Images</span>
+          <span class="category-chip" data-category="video">🎥 Vidéos</span>
+          <span class="category-chip" data-category="docs">📄 Documents</span>
+        </div>
+
+        <!-- Dossiers -->
+        <div class="overlay-folders">
+          <div class="overlay-folders-title">Dossiers</div>
+          <div class="overlay-folders-grid" id="overlayFoldersGrid">
+            <div class="overlay-folder-item">
+              <i class="fas fa-folder"></i>
+              <span>Documents</span>
+            </div>
+            <div class="overlay-folder-item">
+              <i class="fas fa-folder"></i>
+              <span>Images</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fichiers -->
+        <div class="overlay-files-grid" id="overlayFilesGrid">
+          <div class="overlay-file-item">
+            <i class="fas fa-file-pdf" style="color: #e74c3c;"></i>
+            <span>contrat.pdf</span>
+          </div>
+          <div class="overlay-file-item">
+            <i class="fas fa-file-image" style="color: #27ae60;"></i>
+            <span>vacances.jpg</span>
+          </div>
+          <div class="overlay-file-item">
+            <i class="fas fa-file-audio" style="color: #f39c12;"></i>
+            <span>musique.mp3</span>
+          </div>
+        </div>
+      </div>
+      <div class="overlay-footer">
+        <div class="selection-count">
+          <i class="fas fa-check-circle" style="color: #ff7e9f;"></i>
+          <span id="selectionCount">0 sélectionné</span>
+        </div>
+        <button class="overlay-btn overlay-btn-secondary" id="cancelSelection">Annuler</button>
+        <button class="overlay-btn overlay-btn-primary" id="confirmSelection">Ajouter (0)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALE NOUVEAU DOSSIER -->
+  <div class="modal hidden" id="folderModal">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container">
+      <h3>Nouveau dossier</h3>
+      <input type="text" class="modal-input" id="folderNameInput" placeholder="Nom du dossier">
+      <div class="modal-actions">
+        <button class="overlay-btn overlay-btn-secondary" id="cancelFolder">Annuler</button>
+        <button class="overlay-btn overlay-btn-primary" id="createFolder">Créer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // ===== GESTIONNAIRE DE DOSSIERS =====
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('📁 Gestionnaire chargé');
+      
+      // Éléments DOM
+      const addFolderBtn = document.getElementById('addFolderBtn');
+      const folderModal = document.getElementById('folderModal');
+      const modalBackdrop = document.getElementById('modalBackdrop');
+      const cancelFolder = document.getElementById('cancelFolder');
+      const createFolder = document.getElementById('createFolder');
+      const folderNameInput = document.getElementById('folderNameInput');
+      
+      // Boutons d'ajout de fichiers
+      const addFileBtn = document.getElementById('addFileBtn');
+      const selectionOverlay = document.getElementById('selectionOverlay');
+      const overlayBackdrop = document.getElementById('overlayBackdrop');
+      const cancelSelection = document.getElementById('cancelSelection');
+      const confirmSelection = document.getElementById('confirmSelection');
+      
+      // État de la sélection
+      let selectedFiles = new Set();
+      
+      // Ouvrir modal nouveau dossier
+      if (addFolderBtn) {
+        addFolderBtn.addEventListener('click', () => {
+          folderModal.classList.remove('hidden');
+          folderNameInput.focus();
+        });
+      }
+      
+      // Fermer modal
+      function closeModal() {
+        folderModal.classList.add('hidden');
+        folderNameInput.value = '';
+      }
+      
+      if (modalBackdrop) {
+        modalBackdrop.addEventListener('click', closeModal);
+      }
+      
+      if (cancelFolder) {
+        cancelFolder.addEventListener('click', closeModal);
+      }
+      
+      // Créer dossier
+      if (createFolder) {
+        createFolder.addEventListener('click', () => {
+          const name = folderNameInput.value.trim();
+          if (name) {
+            alert(`📁 Dossier "${name}" créé (simulation)`);
+            closeModal();
+          }
+        });
+      }
+      
+      // Ouvrir overlay de sélection
+      if (addFileBtn) {
+        addFileBtn.addEventListener('click', () => {
+          selectionOverlay.classList.remove('hidden');
+        });
+      }
+      
+      // Fermer overlay
+      function closeOverlay() {
+        selectionOverlay.classList.add('hidden');
+        selectedFiles.clear();
+        updateSelectionUI();
+      }
+      
+      if (overlayBackdrop) {
+        overlayBackdrop.addEventListener('click', closeOverlay);
+      }
+      
+      if (cancelSelection) {
+        cancelSelection.addEventListener('click', closeOverlay);
+      }
+      
+      // Gestion de la sélection des fichiers (appui long)
+      document.querySelectorAll('.overlay-file-item').forEach(item => {
+        let pressTimer;
+        
+        item.addEventListener('mousedown', () => {
+          pressTimer = setTimeout(() => {
+            item.classList.toggle('selected');
+            const fileName = item.querySelector('span')?.textContent;
+            if (item.classList.contains('selected')) {
+              selectedFiles.add(fileName);
+            } else {
+              selectedFiles.delete(fileName);
+            }
+            updateSelectionUI();
+          }, 500);
+        });
+        
+        item.addEventListener('mouseup', () => clearTimeout(pressTimer));
+        item.addEventListener('mouseleave', () => clearTimeout(pressTimer));
+      });
+      
+      // Mettre à jour l'UI de sélection
+      function updateSelectionUI() {
+        const count = selectedFiles.size;
+        document.getElementById('selectionCount').textContent = 
+          count === 0 ? '0 sélectionné' : count === 1 ? '1 fichier sélectionné' : `${count} fichiers sélectionnés`;
+        
+        const confirmBtn = document.getElementById('confirmSelection');
+        confirmBtn.textContent = `Ajouter (${count})`;
+        confirmBtn.disabled = count === 0;
+      }
+      
+      // Confirmer la sélection
+      if (confirmSelection) {
+        confirmSelection.addEventListener('click', () => {
+          if (selectedFiles.size > 0) {
+            alert(`✅ ${selectedFiles.size} fichier(s) ajouté(s) (simulation)`);
+            closeOverlay();
+          }
+        });
+      }
+      
+      // Catégories
+      document.querySelectorAll('.category-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          // Ici: filtrer les fichiers par catégorie
+        });
+      });
+      
+      // Navigation dossiers
+      document.querySelectorAll('.overlay-folder-item').forEach(folder => {
+        folder.addEventListener('click', () => {
+          const name = folder.querySelector('span')?.textContent;
+          alert(`📂 Navigation vers "${name}" (simulation)`);
+          // Ici: charger le contenu du dossier
+        });
+      });
+      
+      // Bouton Coller (actif si fichier copié)
+      const pasteBtn = document.getElementById('pasteBtn');
+      
+      // Simuler activation si un fichier est copié
+      setTimeout(() => {
+        pasteBtn.classList.remove('disabled');
+        pasteBtn.classList.add('active');
+      }, 2000);
+      
+      pasteBtn.addEventListener('click', () => {
+        if (!pasteBtn.classList.contains('disabled')) {
+          alert('📋 Coller - Fonctionnalité à implémenter');
+        }
+      });
+      
+      // Bouton +
+      document.querySelectorAll('.folder-action-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const folderName = btn.closest('.folder-item')?.querySelector('.folder-name')?.textContent;
+          alert(`➕ Ajouter des fichiers au dossier "${folderName}"`);
+          selectionOverlay.classList.remove('hidden');
+        });
+      });
+      
+      // Navigation breadcrumb
+      document.querySelectorAll('.breadcrumb-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const path = item.dataset.path;
+          alert(`📁 Navigation vers "${path}"`);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
