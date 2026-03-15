@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-  <!-- LOADER INITIAL -->
+  <!-- LOADER INITIAL (centré) -->
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-card">
       <div class="loading-title">MÉGANE CLOUD</div>
@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <!-- SYNC LOADER -->
+  <!-- SYNC LOADER (centré milieu) -->
   <div class="sync-loader hidden" id="syncLoader">
     <div class="sync-loader-content">
       <i class="fas fa-circle-notch fa-spin"></i>
@@ -42,25 +42,33 @@
     </div>
   </div>
 
-  <!-- HEADER -->
+  <!-- HEADER (commun aux deux modes) -->
   <header class="header">
-   <a href="index.html" class="logo-circle" aria-label="Mégane Cloud">
-  <img src="assets/logo.png" 
-       alt="Logo MC"
-       onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'url(%23g)\'/%3E%3Cdefs%3E%3ClinearGradient id=\'g\' x1=\'0%25\' y1=\'0%25\' x2=\'100%25\' y2=\'100%25\'%3E%3Cstop offset=\'0%25\' stop-color=\'%234a90e2\'/%3E%3Cstop offset=\'100%25\' stop-color=\'%23ff7e9f\'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ctext x=\'50\' y=\'70\' font-size=\'50\' text-anchor=\'middle\' fill=\'white\' font-family=\'Arial\'%3EMC%3C/text%3E%3C/svg%3E';">
-</a>
+    <a href="index.html" class="logo-circle" aria-label="Mégane Cloud">
+      <img src="assets/logo.png" alt="Logo MC" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'url(%23g)\'/%3E%3Cdefs%3E%3ClinearGradient id=\'g\' x1=\'0%25\' y1=\'0%25\' x2=\'100%25\' y2=\'100%25\'%3E%3Cstop offset=\'0%25\' stop-color=\'%234a90e2\'/%3E%3Cstop offset=\'100%25\' stop-color=\'%23ff7e9f\'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ctext x=\'50\' y=\'70\' font-size=\'50\' text-anchor=\'middle\' fill=\'white\' font-family=\'Arial\'%3EMC%3C/text%3E%3C/svg%3E';">
+    </a>
 
     <span class="site-name-3d">MÉGANE</span>
 
-    <!-- Barre de recherche (par défaut) -->
+    <!-- Barre de recherche (visible uniquement en mode connecté) -->
     <div class="search-container" id="searchContainer">
       <input type="text" class="search-input" id="searchInput" placeholder="Rechercher...">
     </div>
 
+    <!-- Menu contextuel header (caché par défaut) -->
+    <div class="context-menu-header hidden" id="headerContextMenu">
+      <div class="context-menu-header-content">
+        <!-- Options injectées par JS -->
+      </div>
+    </div>
+
     <!-- Barre multi-sélection (cachée par défaut) -->
     <div class="multi-select-actions hidden" id="multiSelectActions">
-      <span class="select-count" id="selectCount">0 </span>
+      <span class="select-count" id="selectCount">0 sélectionné</span>
       <div class="select-buttons">
+        <button class="action-btn" id="copySelectedBtn" title="Copier">
+          <i class="fas fa-copy"></i>
+        </button>
         <button class="action-btn" id="downloadSelectedBtn" title="Télécharger la sélection">
           <i class="fas fa-download"></i>
         </button>
@@ -73,43 +81,36 @@
       </div>
     </div>
 
-    <!-- Menu contextuel header -->
-    <div class="context-menu-header hidden" id="headerContextMenu">
-      <div class="context-menu-header-content">
-        <!-- Options injectées par JS -->
-      </div>
-    </div>
-
-    <!-- Boutons d'authentification -->
+    <!-- Boutons d'authentification (visibles uniquement en mode invité) -->
     <div class="auth-buttons" id="authButtons">
       <a href="auth.html?mode=login" class="btn-auth btn-auth-login">Connexion</a>
       <a href="auth.html?mode=signup" class="btn-auth btn-auth-signup">Inscription</a>
     </div>
 
-    <!-- Bouton paramètres -->
+    <!-- Bouton paramètres (visible uniquement en mode connecté) -->
     <a href="para.html" class="settings-btn" id="settingsBtn" aria-label="Paramètres">
       <i class="fas fa-cog"></i>
     </a>
   </header>
 
-  <!-- STATS SCROLLABLES -->
+  <!-- STATS SCROLLABLES (visibles uniquement en mode connecté) -->
   <div class="stats-scroll-container" id="statsContainer">
     <div class="stats-flex-row" id="statsRow">
-      <!-- Stats injectées par JS -->
+      <!-- Les stats seront injectées par JS -->
     </div>
   </div>
 
-  <!-- BARRE FICHIERS RÉCENTS -->
-  <div class="recent-files-bar">
+  <!-- BARRE FICHIERS RÉCENTS (visibles uniquement en mode connecté) -->
+  <div class="recent-files-bar" id="recentFilesBar">
     <span class="recent-files-title">Fichiers récents</span>
   </div>
 
-  <!-- CONTENU PRINCIPAL -->
+  <!-- CONTENU PRINCIPAL - Sera remplacé par JS selon le mode -->
   <main class="main-content" id="mainContent">
-    <!-- Grille injectée par JS -->
+    <!-- Le contenu sera injecté par JS (mode connecté ou invité) -->
   </main>
 
-  <!-- BOUTONS FLOTTANTS -->
+  <!-- BOUTONS FLOTTANTS (visibles uniquement en mode connecté) -->
   <div class="fab-rectangle" id="fabContainer">
     <div class="fab fab-upload" id="uploadBtn" title="Uploader des fichiers">
       <i class="fas fa-plus"></i>
@@ -152,95 +153,81 @@
       </div>
     </div>
   </div>
-  
-      
-
 
   <!-- Script JavaScript -->
   <script src="js/app.js"></script>
   <script src="js/securite.js"></script>
   <script src="js/index.js"></script>
-  <script src="js/correction.js"></script>
+  
+  <!-- Patch pour presse-papiers (si nécessaire) -->
   <script>
-  (function() {
-    console.log('🔧 Patch: Copie simple avec timeout');
-    
-    // Récupérer les fichiers sélectionnés
-    function getSelectedFileIds() {
-      return Array.from(document.querySelectorAll('.file-item.selected'))
-        .map(item => item.dataset.id)
-        .filter(id => id);
-    }
-    
-    function getFileById(fileId) {
-      const item = document.querySelector(`.file-item[data-id="${fileId}"]`);
-      if (item?.dataset.file) {
-        try {
-          return JSON.parse(item.dataset.file.replace(/&apos;/g, "'"));
-        } catch (e) {}
-      }
-      return null;
-    }
-    
-    // Gestionnaire de copie direct
-    window.handleCopySelected = async function() {
-      console.log('📋 Copie');
+    (function() {
+      console.log('🔧 Patch: Récupération fichiers sélectionnés');
       
-      const selectedIds = getSelectedFileIds();
-      if (selectedIds.length === 0) {
-        alert('Aucun fichier sélectionné');
-        return;
+      function getSelectedFileIds() {
+        return Array.from(document.querySelectorAll('.file-item.selected'))
+          .map(item => item.dataset.id)
+          .filter(id => id);
       }
       
-      const file = getFileById(selectedIds[0]);
-      if (!file) {
-        alert('Fichier introuvable');
-        return;
+      function getFileById(fileId) {
+        const item = document.querySelector(`.file-item[data-id="${fileId}"]`);
+        if (item?.dataset.file) {
+          try {
+            return JSON.parse(item.dataset.file.replace(/&apos;/g, "'"));
+          } catch (e) {}
+        }
+        return null;
       }
       
-      // Vérifier si supabase existe
-      if (!window.supabase) {
-        alert('Supabase non disponible');
-        return;
-      }
-      
-      try {
-        // Récupérer utilisateur
-        const { data: { user } } = await window.supabase.auth.getUser();
-        
-        if (!user) {
-          alert('Vous devez être connecté');
+      window.handleCopySelected = async function() {
+        const selectedIds = getSelectedFileIds();
+        if (selectedIds.length === 0) {
+          alert('Aucun fichier sélectionné');
           return;
         }
         
-        // Copier
-        await window.supabase
-          .from('presse_papiers')
-          .delete()
-          .eq('user_id', user.id);
+        const file = getFileById(selectedIds[0]);
+        if (!file) {
+          alert('Fichier introuvable');
+          return;
+        }
         
-        await window.supabase
-          .from('presse_papiers')
-          .insert({ user_id: user.id, fichier_id: file.id });
+        if (!window.supabase) {
+          alert('Supabase non disponible');
+          return;
+        }
         
-        alert(`✅ Copié: ${file.nom}`);
-        
-      } catch (error) {
-        console.error('Erreur:', error);
-        alert('❌ Erreur copie');
+        try {
+          const { data: { user } } = await window.supabase.auth.getUser();
+          
+          if (!user) {
+            alert('Vous devez être connecté');
+            return;
+          }
+          
+          await window.supabase
+            .from('presse_papiers')
+            .delete()
+            .eq('user_id', user.id);
+          
+          await window.supabase
+            .from('presse_papiers')
+            .insert({ user_id: user.id, fichier_id: file.id });
+          
+          alert(`✅ Fichier copié : ${file.nom}`);
+          
+        } catch (error) {
+          console.error('Erreur copie:', error);
+          alert('❌ Erreur lors de la copie');
+        }
+      };
+      
+      const btn = document.getElementById('copySelectedBtn');
+      if (btn) {
+        btn.addEventListener('click', window.handleCopySelected);
       }
-    };
-    
-    // Patcher le bouton
-    const btn = document.getElementById('copySelectedBtn');
-    if (btn) {
-      btn.addEventListener('click', window.handleCopySelected);
-      console.log('✅ Bouton prêt');
-    } else {
-      console.log('⏳ Attente bouton...');
-    }
-    
-  })();
-</script>
+    })();
+  </script>
 </body>
 </html>
