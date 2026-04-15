@@ -1,22 +1,22 @@
 // ============================================
 // MEGANE_PICTURE - Service Worker
-// Gestion du cache et mode hors ligne
+// Version adaptée pour GitHub Pages (/mysteuf/)
 // ============================================
 
 const CACHE_NAME = 'megane-picture-v1.0.0';
-const OFFLINE_URL = '/offline.html';
+const OFFLINE_URL = '/mysteuf/offline.html';
 
-// Fichiers à mettre en cache
+// Fichiers à mettre en cache (chemins absolus avec /mysteuf/)
 const FILES_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/login.html',
-  '/css/app.css',
-  '/css/login.css',
-  '/js/app.js',
-  '/js/login.js',
-  '/images/logo.png',
-  '/images/icone.png',
+  '/mysteuf/',
+  '/mysteuf/index.html',
+  '/mysteuf/login.html',
+  '/mysteuf/css/app.css',
+  '/mysteuf/css/login.css',
+  '/mysteuf/js/app.js',
+  '/mysteuf/js/login.js',
+  '/mysteuf/images/logo.png',
+  '/mysteuf/images/icon.png',
   'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',
@@ -94,7 +94,21 @@ self.addEventListener('fetch', (event) => {
     return;
   }
   
-  // Pour les autres ressources (CSS, JS, HTML)
+  // Pour les ressources locales (CSS, JS, HTML)
+  // Rediriger les chemins relatifs vers /mysteuf/
+  let requestPath = requestUrl.pathname;
+  
+  // Si la requête est pour la racine, servir /mysteuf/
+  if (requestPath === '/' || requestPath === '') {
+    event.respondWith(
+      fetch('/mysteuf/index.html').catch(() => {
+        return caches.match('/mysteuf/index.html');
+      })
+    );
+    return;
+  }
+  
+  // Pour les autres ressources
   event.respondWith(
     fetch(event.request)
       .then((networkResponse) => {
@@ -115,7 +129,7 @@ self.addEventListener('fetch', (event) => {
           }
           // Page d'offline pour les navigations
           if (event.request.mode === 'navigate') {
-            return caches.match('/offline.html');
+            return caches.match('/mysteuf/offline.html');
           }
           return new Response('Contenu non disponible hors ligne', {
             status: 404,
