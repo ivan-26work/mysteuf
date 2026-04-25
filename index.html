@@ -2,13 +2,26 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>MEGANE_PICTURE — Galerie</title>
+  
+  <!-- Préconnexion pour accélérer les chargements -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://fuulsbckqjzedtbimqaq.supabase.co">
+  
+  <!-- Polices -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome (version optimisée) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Styles -->
   <link rel="stylesheet" href="css/app.css">
+  
+  <!-- Manifest et icônes -->
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="images/icone.png">
   <meta name="theme-color" content="#0ea5e9">
@@ -55,7 +68,7 @@
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
   <div class="footer-container">
-    <!-- Barre de recherche (visible par défaut) -->
+    <!-- Barre de recherche -->
     <div class="search-bar" id="searchBar">
       <div class="search-input-wrapper">
         <i class="fas fa-search"></i>
@@ -63,7 +76,7 @@
       </div>
     </div>
 
-    <!-- Barre d'action (cachée par défaut) -->
+    <!-- Barre d'action (multi-sélection) -->
     <div class="action-bar" id="actionBar">
       <button class="action-btn" id="renameActionBtn" aria-label="Renommer">
         <i class="fas fa-pen"></i>
@@ -306,10 +319,11 @@
 </div>
 
 <!-- ===== SCRIPTS ===== -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-<script src="js/app.js"></script>
+<!-- Chargement différé pour les scripts lourds -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" defer></script>
+<script src="js/app.js" defer></script>
 
 </body>
 </html>
